@@ -1,0 +1,33 @@
+version: 1
+
+aws:
+  profile_name: "rs-dev"
+  region: "us-east-1"
+  sso:
+    start_url: "https://acme-corp.awsapps.com/start"
+    region: "us-east-1"
+    account_id: "123456789012"
+    role_name: "DeveloperAccess"
+
+artifact:
+  domain: "acme-corp"
+  domain_owner: "123456789012"
+  repository: "python-internal"
+  region: "us-east-1"
+
+package:
+  uv_index_name: "internal"
+  validation_package: "acme-core"
+  install_strategy: "add" # "add" for uv add, "pip-install" for uv pip install
+
+cli:
+  log_level: "info"
+  no_color: false
+  non_interactive: false
+
+features:
+  codeartifact: true
+  docker: false
+  java: false
+  terraform: false
+  kubernetes: false

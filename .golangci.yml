@@ -1,0 +1,57 @@
+linters-settings:
+  govet:
+    check-shadowing: true
+  golint:
+    min-confidence: 0.8
+  gocyclo:
+    min-complexity: 15
+  maligned:
+    suggest-new: true
+  dupl:
+    threshold: 100
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+  depguard:
+    list-type: blacklist
+    include-go-root: false
+  misspell:
+    locale: US
+  lll:
+    line-length: 140
+  goimports:
+    local-prefixes: github.com/acme-corp/rs-cli
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+    disabled-checks:
+      - dupImport 
+      - ifElseChain
+      - octalLiteral
+
+linters:
+  disable-all: true
+  enable:
+    - govet
+    - revive
+    - goimports
+    - misspell
+    - ineffassign
+    - typecheck
+    - unused
+    - staticcheck
+    - gosimple
+    - errcheck
+
+run:
+  timeout: 5m
+  tests: true
+  
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
