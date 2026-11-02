@@ -49,7 +49,7 @@ func (p *CodeArtifactProvider) GetAuthToken(ctx context.Context) (string, time.T
 
 	res, err := client.GetAuthorizationToken(ctx, input)
 	if err != nil {
-		return "", time.Time{}, errors.Wrap(errors.ErrCodeArtifactAuth, err, "Failed to get CodeArtifact authorization token")
+		return "", time.Time{}, errors.Wrap(errors.ErrCodeArtifactAuth, err, "You do not have permission to access the internal package repository.\n\nPlease contact the DevOps team.")
 	}
 
 	return aws.ToString(res.AuthorizationToken), aws.ToTime(res.Expiration), nil
@@ -92,7 +92,7 @@ func (p *CodeArtifactProvider) ValidateAccess(ctx context.Context) error {
 
 	_, err = client.DescribeRepository(ctx, input)
 	if err != nil {
-		return errors.Wrap(errors.ErrCodeArtifactRepo, err, "Failed to access CodeArtifact repository. Verify your permissions and repository name.")
+		return errors.Wrap(errors.ErrCodeArtifactRepo, err, "You do not have permission to access the internal package repository.\n\nPlease contact the DevOps team.")
 	}
 
 	return nil

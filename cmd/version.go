@@ -27,11 +27,22 @@ var versionCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Printf("RS Platform CLI (rs) v%s\n", buildinfo.Version)
-		fmt.Printf("Commit:  %s\n", buildinfo.Commit)
-		fmt.Printf("Date:    %s\n", buildinfo.Date)
-		fmt.Printf("Go:      %s\n", buildinfo.GoVersion)
-		fmt.Printf("OS/Arch: %s/%s\n", runtime.GOOS, runtime.GOARCH)
+		fmt.Println("RS CLI")
+		fmt.Println()
+		fmt.Println("Version:")
+		fmt.Println(buildinfo.Version)
+		fmt.Println()
+		fmt.Println("Organization:")
+		fmt.Println(buildinfo.Organization)
+		fmt.Println()
+		fmt.Println("Build Number:")
+		fmt.Println(buildinfo.BuildNumber)
+		fmt.Println()
+		fmt.Println("Build Date:")
+		fmt.Println(buildinfo.Date)
+		fmt.Println()
+		fmt.Println("Commit:")
+		fmt.Println(buildinfo.Commit)
 	},
 }
 

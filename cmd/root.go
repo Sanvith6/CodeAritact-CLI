@@ -19,7 +19,6 @@ var (
 )
 
 var (
-	cfgFile       string
 	verbose       bool
 	quiet         bool
 	noColor       bool
@@ -32,11 +31,16 @@ var (
 // RootCmd represents the base command when called without any subcommands.
 var RootCmd = &cobra.Command{
 	Use:   "rs",
-	Short: "RS Platform CLI - The official internal developer platform tool",
+	Short: "RS Platform CLI",
 	Long: `RS Platform CLI (rs) is the official enterprise developer platform tool.
 It handles developer onboarding, authentication, and package manager configuration.
 
 Use 'rs bootstrap' to configure your machine for the first time.`,
+	SilenceUsage:  true,
+	SilenceErrors: true,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return bootstrapCmd.RunE(cmd, args)
+	},
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		// Suppress color if requested
 		if noColor {
@@ -44,7 +48,7 @@ Use 'rs bootstrap' to configure your machine for the first time.`,
 		}
 
 		// Initialize logger early
-		logLevel := "info"
+		logLevel := "error" // Default: hide background logs so they don't clash with UI
 		if verbose {
 			logLevel = "debug"
 		} else if quiet {
@@ -55,16 +59,16 @@ Use 'rs bootstrap' to configure your machine for the first time.`,
 		// Load config
 		loader := config.NewLoader()
 		
-		// If profile flag is passed, we should set it in the environment so Viper picks it up
+		// If profile flag is passed, we should set it in the environment
 		if awsProfile != "" {
 			os.Setenv("RS_AWS_PROFILE_NAME", awsProfile)
 		}
 		
-		cfg, err := loader.Load(cfgFile)
+		cfg, err := loader.Load()
 		if err != nil {
 			// Don't fail immediately, some commands (like doctor or bootstrap) might want to fix it.
 			logger.Warn("Failed to load config completely", "error", err)
-			cfg = config.Defaults() // Fallback
+			cfg = config.DefaultConfig // Fallback
 		}
 
 		// Create DI Container
@@ -89,7 +93,6 @@ func Execute() {
 }
 
 func init() {
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.rs/config.yaml)")
 	RootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "enable verbose logging")
 	RootCmd.PersistentFlags().BoolVarP(&quiet, "quiet", "q", false, "suppress all output except errors")
 	RootCmd.PersistentFlags().BoolVar(&noColor, "no-color", false, "disable colour output")

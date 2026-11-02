@@ -38,8 +38,6 @@ type Container struct {
 	// Services
 	AuthService    *services.AuthService
 	RepoService    *services.RepositoryService
-	PackageService *services.PackageService
-	ProjectService *services.ProjectService
 	EnvService     *services.EnvironmentService
 }
 
@@ -71,13 +69,11 @@ func Build(cfg *config.Config, logger *slog.Logger, isNonInteractive bool) (*Con
 	// Providers
 	c.AuthProvider = aws.NewSSOAuthProvider(cfg, pInfo, c.Runner, logger)
 	c.RepoProvider = aws.NewCodeArtifactProvider(cfg)
-	c.PackageProvider = uv.NewUVPackageManager(cfg, pInfo, c.Runner)
+	c.PackageProvider = uv.NewUVPackageManager(cfg, pInfo)
 
 	// Services
 	c.AuthService = services.NewAuthService(c.AuthProvider, c.State, logger)
 	c.RepoService = services.NewRepositoryService(c.AuthService, c.RepoProvider, c.State, logger)
-	c.PackageService = services.NewPackageService(c.RepoService, c.PackageProvider, logger)
-	c.ProjectService = services.NewProjectService(c.PackageProvider, logger)
 	c.EnvService = services.NewEnvironmentService(pInfo, logger)
 
 	return c, nil

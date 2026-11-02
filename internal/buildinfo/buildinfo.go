@@ -12,6 +12,13 @@ var (
 	// Date is the build timestamp. Injected via ldflags.
 	Date = "unknown"
 	
+	// Organization is the company name.
+	Organization = "GRAG"
+	
+	// BuildNumber is the CI build number. Injected via ldflags.
+	BuildNumber = "local"
+
+	
 	// GoVersion is the version of Go used to build the CLI.
 	GoVersion = runtime.Version()
 )

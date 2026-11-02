@@ -63,3 +63,15 @@ func (s *RepositoryService) GetAuthInfo(ctx context.Context) (endpoint, token st
 
 	return endpoint, token, nil
 }
+
+// VerifyPackage ensures the package exists in the repository.
+func (s *RepositoryService) VerifyPackage(ctx context.Context, pkgName string) error {
+	versions, err := s.provider.ListVersions(ctx, pkgName)
+	if err != nil {
+		return fmt.Errorf("failed to list versions for package %s: %w", pkgName, err)
+	}
+	if len(versions) == 0 {
+		return fmt.Errorf("package %s not found in repository", pkgName)
+	}
+	return nil
+}

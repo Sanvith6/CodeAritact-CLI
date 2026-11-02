@@ -34,11 +34,10 @@ type ArtifactConfig struct {
 	Region      string `yaml:"region"       mapstructure:"region"`
 }
 
-// PackageConfig holds package manager (e.g., uv) configuration.
+// PackageConfig holds package management related configuration.
 type PackageConfig struct {
-	UVIndexName       string `yaml:"uv_index_name"      mapstructure:"uv_index_name"`
-	ValidationPackage string `yaml:"validation_package" mapstructure:"validation_package"`
-	InstallStrategy   string `yaml:"install_strategy"   mapstructure:"install_strategy"` // "add" or "pip-install"
+	UVIndexName       string `yaml:"uv_index_name"`
+	ValidationPackage string `yaml:"validation_package"`
 }
 
 // CLIConfig holds general CLI operational configuration.

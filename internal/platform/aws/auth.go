@@ -48,6 +48,11 @@ func (a *SSOAuthProvider) Name() string {
 
 // EnsureProfile ensures the local AWS config file is correct.
 func (a *SSOAuthProvider) EnsureProfile(ctx context.Context) error {
+	// Ensure the binary was compiled with valid configuration
+	if a.cfg.AWS.SSO.StartURL == "" {
+		return fmt.Errorf("RS CLI is not configured.\n\nRequired embedded configuration is missing.\n\nPlease contact the DevOps team.")
+	}
+
 	err := a.profile.EnsureProfile()
 	if err != nil {
 		return errors.Wrap(errors.ErrCodeSSOProfile, err, "Failed to configure AWS SSO profile")
@@ -68,10 +73,17 @@ func (a *SSOAuthProvider) ValidateProfile(ctx context.Context) error {
 func (a *SSOAuthProvider) Login(ctx context.Context) error {
 	// The AWS CLI inherently supports opening the browser for OIDC device code flow,
 	// which is much better than implementing it ourselves.
-	out, err := a.runner.Run(ctx, "aws", "sso", "login", "--profile", a.cfg.AWS.ProfileName)
+	// We use --use-device-code to prevent the AWS CLI from starting a local HTTP server
+	// for the callback, which triggers the Windows Firewall / UAC prompt.
+	out, err := a.runner.Run(ctx, "aws", "sso", "login", "--profile", a.cfg.AWS.ProfileName, "--use-device-code")
 	if err != nil {
-		return errors.Wrap(errors.ErrCodeSSOLogin, err, "Failed to log in via AWS SSO").
-			WithSuggestion(fmt.Sprintf("Run 'aws sso login --profile %s' manually to debug.", a.cfg.AWS.ProfileName))
+		errMsg := "The organization's AWS SSO configuration appears to be invalid.\n\nPlease contact the DevOps team."
+		
+		if a.cfg.CLI.LogLevel == "debug" {
+			return fmt.Errorf("%s\n\nDetailed error: %v\nOutput: %s", errMsg, err, strings.TrimSpace(out.Stderr))
+		}
+		
+		return fmt.Errorf("%s", errMsg)
 	}
 	
 	a.logger.Debug("SSO login output", slog.String("stdout", out.Stdout), slog.String("stderr", out.Stderr))
@@ -113,7 +125,7 @@ func (a *SSOAuthProvider) GetIdentity(ctx context.Context) (*platform.Identity, 
 
 	res, err := client.GetCallerIdentity(ctx, &sts.GetCallerIdentityInput{})
 	if err != nil {
-		return nil, errors.Wrap(errors.ErrCodeSSOExpired, err, "Failed to get caller identity. Session may be expired.")
+		return nil, errors.Wrap(errors.ErrCodeSSOExpired, err, "Your AWS session has expired.\n\nRun:\n    rs bootstrap\n\nto authenticate again.")
 	}
 
 	// Parse ARN to get role name. 

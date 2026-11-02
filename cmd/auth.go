@@ -23,6 +23,21 @@ var loginCmd = &cobra.Command{
 
 		spinner.StopSuccess("Successfully authenticated")
 		
+		// Fetch CodeArtifact token and configure uv
+		spinner = di.UIManager.StartSpinner("Configuring package manager...")
+		endpoint, token, err := di.RepoService.GetAuthInfo(cmd.Context())
+		if err != nil {
+			spinner.StopError("Failed to get repository token")
+			return err
+		}
+		
+		err = di.PackageProvider.ConfigureAuth(cmd.Context(), "internal", endpoint, token)
+		if err != nil {
+			spinner.StopError("Failed to configure uv")
+			return err
+		}
+		spinner.StopSuccess("Package manager configured")
+		
 		// Fetch identity for display
 		identity, err := di.AuthService.GetIdentity(cmd.Context())
 		if err == nil {
