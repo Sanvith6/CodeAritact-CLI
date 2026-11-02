@@ -4,7 +4,7 @@
 [![AWS SDK v2](https://img.shields.io/badge/AWS%20SDK-v2-FF9900?style=flat&logo=amazon-aws)](https://aws.amazon.com/sdk-for-go/)
 [![Package Manager](https://img.shields.io/badge/uv-Astral-blueviolet?style=flat)](https://github.com/astral-sh/uv)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen?style=flat)](#platform-support)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > **The zero-friction, self-contained AWS CodeArtifact & SSO developer CLI for Python packages.**  
 > Pre-configured by platform engineers, effortlessly executed by developers with a single command.
@@ -340,5 +340,5 @@ golangci-lint run
 
 ## 📄 License
 
-Licensed under the [Apache License, Version 2.0](LICENSE).
+Licensed under the [MIT License](LICENSE).
 Distributed as part of the Enterprise Platform Tooling initiative.
