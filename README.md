@@ -53,17 +53,17 @@ Add your organization's cloud settings to [`configs/default.yaml`](configs/defau
 ```yaml
 aws:
   sso:
-    start_url: "https://your-company.awsapps.com/start"  # Your SSO Portal URL
+    start_url: "https://my-company.awsapps.com/start"  # Your SSO Portal URL
     region: "us-east-1"
-    account_id: "080800845757"                           # Target AWS Account ID
-    role_name: "Developer-permission"                    # IAM Role
+    account_id: "123456789012"                         # Target AWS Account ID
+    role_name: "DeveloperAccess"                       # IAM Role
 artifact:
-  domain: "grag-ai-factory"                              # CodeArtifact Domain
-  domain_owner: "080800845757"                           # Account ID
-  repository: "python-packages"                          # CodeArtifact Repository
+  domain: "my-company-domain"                          # CodeArtifact Domain
+  domain_owner: "123456789012"                         # Account ID
+  repository: "python-packages"                        # CodeArtifact Repository
 package:
   uv_index_name: "internal"
-  validation_package: "company-web"                      # Internal canary package
+  validation_package: "my-package"                     # Internal canary package
 ```
 
 ### Step 2: Build & Distribute

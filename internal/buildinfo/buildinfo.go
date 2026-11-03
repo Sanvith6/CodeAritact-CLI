@@ -13,7 +13,7 @@ var (
 	Date = "unknown"
 	
 	// Organization is the company name.
-	Organization = "GRAG"
+	Organization = "Acme Corp"
 	
 	// BuildNumber is the CI build number. Injected via ldflags.
 	BuildNumber = "local"

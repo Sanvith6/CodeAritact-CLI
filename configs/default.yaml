@@ -2,22 +2,22 @@ version: 1
 
 aws:
   sso:
-    start_url: "https://d-906679b0a1.awsapps.com/start"
+    start_url: "https://my-company.awsapps.com/start"
     region: "us-east-1"
-    account_id: "080800845757"
-    role_name: "Developer-permission"
+    account_id: "123456789012"
+    role_name: "DeveloperAccess"
   profile_name: "Developer"
   region: "us-east-1"
 
 artifact:
-  domain: "grag-ai-factory"
-  domain_owner: "080800845757"
+  domain: "my-company-domain"
+  domain_owner: "123456789012"
   repository: "python-packages"
   region: "us-east-1"
 
 package:
   uv_index_name: "internal"
-  validation_package: "company-web"
+  validation_package: "my-package"
   install_strategy: "add"
 
 cli:

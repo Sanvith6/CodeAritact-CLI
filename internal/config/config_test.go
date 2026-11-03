@@ -13,7 +13,7 @@ func TestLoader_Defaults(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.Equal(t, 1, cfg.Version)
-	assert.Equal(t, "https://d-906679b0a1.awsapps.com/start", cfg.AWS.SSO.StartURL)
+	assert.Equal(t, "https://my-company.awsapps.com/start", cfg.AWS.SSO.StartURL)
 	assert.Equal(t, "info", cfg.CLI.LogLevel)
 	assert.True(t, cfg.Features.CodeArtifact)
 }

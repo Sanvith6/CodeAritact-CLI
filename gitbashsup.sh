@@ -16,13 +16,13 @@ IFS=$'\n\t'
 # ------------------------------------------------------------------------------
 AWS_REGION="${AWS_REGION:-us-east-1}"
 SSO_REGION="${SSO_REGION:-us-east-1}"
-AWS_ACCOUNT_ID="${AWS_ACCOUNT_ID:-080800845757}"
-SSO_ROLE_NAME="${SSO_ROLE_NAME:-Developer-permission}"
+AWS_ACCOUNT_ID="${AWS_ACCOUNT_ID:-123456789012}"
+SSO_ROLE_NAME="${SSO_ROLE_NAME:-DeveloperAccess}"
 PROFILE_NAME="${PROFILE_NAME:-Developer}"
-CA_DOMAIN="${CA_DOMAIN:-grag-ai-factory}"
-CA_DOMAIN_OWNER="${CA_DOMAIN_OWNER:-080800845757}"
+CA_DOMAIN="${CA_DOMAIN:-my-company-domain}"
+CA_DOMAIN_OWNER="${CA_DOMAIN_OWNER:-123456789012}"
 CA_REPO="${CA_REPO:-python-packages}"
-SSO_START_URL="${SSO_START_URL:-https://d-906679b0a1.awsapps.com/start}"
+SSO_START_URL="${SSO_START_URL:-https://my-company.awsapps.com/start}"
 
 DIAGNOSTIC_MODE="${DIAGNOSTIC_MODE:-true}"
 

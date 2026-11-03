@@ -6,23 +6,23 @@ var DefaultConfig = &Config{
 	Version: 1,
 	AWS: AWSConfig{
 		SSO: SSOConfig{
-			StartURL:  "https://d-906679b0a1.awsapps.com/start",
+			StartURL:  "https://my-company.awsapps.com/start",
 			Region:    "us-east-1",
-			AccountID: "080800845757",
-			RoleName:  "Developer-permission",
+			AccountID: "123456789012",
+			RoleName:  "DeveloperAccess",
 		},
 		ProfileName: "Developer",
 		Region:      "us-east-1",
 	},
 	Artifact: ArtifactConfig{
-		Domain:      "grag-ai-factory",
-		DomainOwner: "080800845757",
+		Domain:      "my-company-domain",
+		DomainOwner: "123456789012",
 		Repository:  "python-packages",
 		Region:      "us-east-1",
 	},
 	Package: PackageConfig{
 		UVIndexName:       "internal",
-		ValidationPackage: "company-web",
+		ValidationPackage: "my-package",
 	},
 	CLI: CLIConfig{
 		LogLevel:       "info",
